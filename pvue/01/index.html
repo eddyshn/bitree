@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+    <div id="app">
+        {{message }}
+        <br>
+        <span v-bind:title="title">this is v-bind:title="title"</span>
+        <br>
+        <input type="checkbox" value="true" v-model="seen">seen</input>
+        <span v-if="seen">v-if</span>
+        <div>this is <b>v-for</b> example</div>
+        <ol>
+            <li v-for="todo in todos">{{todo.text}}</li>
+        </ol>
+        <button v-on:click="clickMe">反转消息</button>
+        <ol>
+            <todo-item
+                    v-for="todo in todos"
+                    v-bind:td="todo"
+            ></todo-item>
+        </ol>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
