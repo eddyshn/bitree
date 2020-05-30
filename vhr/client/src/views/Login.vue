@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :rules="rules" :model="loginFrom" class="loginContainer">
+        <el-form ref="loginForm" :rules="rules" :model="loginFrom" class="loginContainer">
             <h3 class="loginTitle">User Login</h3>
            <el-form-item prop="username">
             <el-input type="text" v-model="loginFrom.username" auto-complete="off" placeholder="please input username"></el-input>
@@ -9,7 +9,7 @@
                 <el-input type="password" v-model="loginFrom.password" auto-complete="off" placeholder="please input password"></el-input>
             </el-form-item>
             <el-checkbox v-bind="checked" class="loginRemember">Remember me</el-checkbox>
-            <el-button type="primary" style="width: 100%">Login</el-button>
+            <el-button type="primary" style="width: 100%" @click="submitLogin()">Login</el-button>
         </el-form>
     </div>
 </template>
@@ -29,7 +29,20 @@
                 },
                 checked: true
             }
-        }
+        },
+        methods:
+            {
+                submitLogin() {
+                    this.$refs.loginForm.validate((valid) => {
+                        if (valid) {
+                            alert('submit!');
+                        } else {
+                            $this.$message.error('Please input the login information!');
+                            return false;
+                        }
+                    });
+                }
+            }
     }
 </script>
 
