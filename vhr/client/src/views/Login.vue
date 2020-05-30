@@ -1,13 +1,14 @@
 <template>
     <div>
         <el-form :rules="rules" :model="loginFrom" class="loginContainer">
+            <h3 class="loginTitle">User Login</h3>
            <el-form-item prop="username">
             <el-input type="text" v-model="loginFrom.username" auto-complete="off" placeholder="please input username"></el-input>
         </el-form-item>
             <el-form-item prop="password">
                 <el-input type="password" v-model="loginFrom.password" auto-complete="off" placeholder="please input password"></el-input>
             </el-form-item>
-            <el-checkbox v-bind="checked"></el-checkbox>
+            <el-checkbox v-bind="checked" class="loginRemember">Remember me</el-checkbox>
             <el-button type="primary" style="width: 100%">Login</el-button>
         </el-form>
     </div>
@@ -39,8 +40,16 @@
      background: #fff;
      margin: 180px auto;
      width: 350px;
-     padding: 35px 35px 15px 35px;
+     padding: 15px 35px 15px 35px;
      border: 1px solid #eaeaea;
      box-shadow: 0 0 25px #cacac6;
  }
+    .loginTitle {
+        margin: 20px auto 40px auto;
+        text-align: center;
+        color: #505458;
+    }
+    .loginRemember {
+        margin: 0 0 20px 0;
+    }
 </style>
