@@ -2,7 +2,14 @@ var app = new Vue(
     { el: '#app',
         data: {
             question: '',
-            answer: 'I cannot give you an answer until you ask a question!'
+            answer: 'I cannot give you an answer until you ask a question!',
+            name: '',
+            newId: 3,
+            list: [
+                { id: 1, name: '李斯' },
+                { id: 2, name: '吕不韦' },
+                { id: 3, name: '嬴政' }
+            ]
         },
         watch: {
             // 如果 `question` 发生改变，这个函数就会运行
@@ -34,6 +41,12 @@ var app = new Vue(
                     .catch(function (error) {
                         vm.answer = 'Error! Could not reach the API. ' + error
                     })
+            },
+
+            add() {
+                //注意这里是unshift
+                this.list.unshift({ id: ++this.newId, name: this.name })
+                this.name = ''
             }
         }
     }
