@@ -14,4 +14,6 @@ public interface HrMapper {
     int updateByPrimaryKeySelective(Hr record);
 
     int updateByPrimaryKey(Hr record);
+
+    Hr loadUserByUsername(String s);
 }
