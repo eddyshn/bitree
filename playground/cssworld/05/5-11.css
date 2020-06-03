@@ -1,0 +1,11 @@
+.box {
+    line-height: 120px;
+    background-color:lightgray;
+}
+
+.content {
+    display: inline-block;
+    line-height: 20px;
+    margin: 0 20px;
+    vertical-align: middle;
+}
