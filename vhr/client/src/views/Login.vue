@@ -8,13 +8,15 @@
             <el-form-item prop="password">
                 <el-input type="password" v-model="loginFrom.password" auto-complete="off" placeholder="please input password"></el-input>
             </el-form-item>
-            <el-checkbox v-bind="checked" class="loginRemember">Remember me</el-checkbox>
+            <el-checkbox  class="loginRemember">Remember me</el-checkbox>
             <el-button type="primary" style="width: 100%" @click="submitLogin()">Login</el-button>
         </el-form>
     </div>
 </template>
 
 <script>
+    import { postKeyValueRequest} from "../utils/api";
+
     export default {
         name: "Login",
         data() {
@@ -35,7 +37,15 @@
                 submitLogin() {
                     this.$refs.loginForm.validate((valid) => {
                         if (valid) {
-                            alert('submit!');
+                            postKeyValueRequest('/doLogin', this.loginFrom)
+                                .then(function (response) {
+                                   if (response){
+                                       alert(JSON.stringify(response));
+                                   }
+                                })
+                                .catch(function (error) {
+                                    console.log(error);
+                                });
                         } else {
                             $this.$message.error('Please input the login information!');
                             return false;
