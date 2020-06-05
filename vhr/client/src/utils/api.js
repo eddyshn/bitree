@@ -35,8 +35,8 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
 });
 
-let baseURL = 'http://localhost:8081';
-
+//let baseURL = 'http://localhost:8081';
+let baseURL = '';
 //login now only support key-value in server side
 export const postKeyValueRequest = (url, params) => {
     return axios(
