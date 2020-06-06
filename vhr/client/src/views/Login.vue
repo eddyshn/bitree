@@ -15,8 +15,6 @@
 </template>
 
 <script>
-    import { postKeyValueRequest} from "../utils/api";
-
     export default {
         name: "Login",
         data() {
@@ -35,12 +33,14 @@
         methods:
             {
                 submitLogin() {
+                    var that =this;
                     this.$refs.loginForm.validate((valid) => {
                         if (valid) {
-                            postKeyValueRequest('/doLogin', this.loginFrom)
+                            that.postKeyValueRequest('/doLogin', this.loginFrom)
                                 .then(function (response) {
                                    if (response){
-                                       alert(JSON.stringify(response));
+                                       window.sessionStorage.setItem('user', JSON.stringify(response.obj))
+                                       that.$router.replace("/home");
                                    }
                                 })
                                 .catch(function (error) {

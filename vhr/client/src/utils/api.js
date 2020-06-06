@@ -14,8 +14,12 @@ axios.interceptors.response.use(function (response) {
     // 对响应数据做点什么
     if (response.status && response.status==200&&response.data.status==500) {
         Message.error(response.data.msg);
+        return;
     }
-    return response;
+    if (response.data.msg) {
+        Message.success(response.data.msg);
+    }
+    return response.data;
 }, function (error) {
     // 对响应错误做点什么
     if (error.status==504 || error.status==404) {
@@ -38,7 +42,8 @@ axios.interceptors.response.use(function (response) {
 //let baseURL = 'http://localhost:8081';
 let baseURL = '';
 //login now only support key-value in server side
-export const postKeyValueRequest = (url, params) => {
+
+    export const postKeyValueRequest = (url, params) => {
     return axios(
         {
             method: 'post',
@@ -47,14 +52,33 @@ export const postKeyValueRequest = (url, params) => {
             transformRequest: [function (data, headers) {
                 // 对 data 进行任意转换处理
                 let ret = '';
-                for (let i in data){
+                for (let i in data) {
                     //convert to key value format
-                    ret += encodeURIComponent(i)+'='+encodeURIComponent(data[i])+'&';
+                    ret += encodeURIComponent(i) + '=' + encodeURIComponent(data[i]) + '&';
                     console.log(ret);
                 }
                 return ret;
             }],
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        }
+    );
+}
+
+export const postRequest = (url, params) => {
+    return axios(
+        {
+            method: 'post',
+            url: `${baseURL}${url}`,
+            data: params
+        }
+    );
+}
+
+export const getRequest = (url) => {
+    return axios(
+        {
+            method: 'get',
+            url: `${baseURL}${url}`
         }
     );
 }
