@@ -19,3 +19,22 @@
     width: 20px; height: 100px;
     background-color: lightblue;
 }
+
+.t:after{
+    content: '';
+    display: inline-block;
+    width: 100%;
+}
+
+.t:before {
+    content: "x";
+    display: inline-block;
+    height: 100%;
+}
+
+.t {
+    width: 256px;
+    height: 256px;
+    border-bottom: 1px dashed #ccc;
+    text-align: justify;
+}
