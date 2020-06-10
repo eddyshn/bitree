@@ -14,9 +14,21 @@
             </el-dropdown>
         </el-header>
         <el-container>
-            <el-aside width="200px">Aside</el-aside>
+            <el-aside width="200px">
+                <el-menu router>
+                    <el-submenu index="1" v-for="(item, index) in this.$router.options.routes" :key="index" v-if="!item.hidden">
+                        <template slot="title">
+                            <i class="el-icon-location"></i>
+                            <span>{{item.name}}</span>
+                        </template>
+                        <el-menu-item :index="child.path" v-for="(child, indexj) in item.children" :key="indexj">{{child.name}}</el-menu-item>
+                    </el-submenu>
+                </el-menu>
+            </el-aside>
             <el-container>
-                <el-main>Main</el-main>
+                <el-main>
+                    <router-view></router-view>　
+                </el-main>
                 <el-footer>Footer</el-footer>
             </el-container>
         </el-container>
@@ -49,6 +61,9 @@
                             message: '已取消删除'
                         });
                     });
+            },
+            menuClick: function (index) {
+                this.$router.push(index);
             }
         }
     }
