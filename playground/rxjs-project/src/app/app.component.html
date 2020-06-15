@@ -1,0 +1,8 @@
+<div style="text-align: center">
+  <h1>This the rxj playgound</h1>
+
+  <button style="margin-top: 50px;width: 100px;height: 50px" (click)="run()">Run</button>
+</div>
+<ul *ngFor="let d of data">
+  <input name="rxjs" type="radio" [value]="d.id"  (input)="selectedId=$event.target.value" ><label>{{d.name}}</label>
+</ul>
