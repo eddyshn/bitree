@@ -4,6 +4,7 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import {postKeyValueRequest, postRequest, getRequest} from './utils/api';
+import store from './store'
 
 Vue.prototype.postKeyValueRequest = postKeyValueRequest;
 Vue.prototype.postRequest = postRequest;
@@ -17,5 +18,6 @@ Vue.use(ElementUI);
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
