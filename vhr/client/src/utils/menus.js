@@ -53,4 +53,6 @@ export function formatRoutes(routes) {
         }
         fmRoutes.push(fmRouter);
     })
+
+    return fmRoutes;
 }
