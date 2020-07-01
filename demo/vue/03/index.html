@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h3>watch example</h3>
+        <p>
+            Ask a yes/no question:
+            <input v-model="question">
+        </p>
+        <p>{{ answer }}</p>
+
+        <h3>v-for key example</h3>
+        <div>
+            <input type="text" v-model="name">
+            <button @click="add">添加</button>
+        </div>
+        <ul>
+            <li v-for="(item, i) in list" :key="item.id">
+                <input type="checkbox"> {{item.name}}
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
