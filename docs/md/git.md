@@ -187,6 +187,18 @@ git reset --hard HEAD~100
 
    > push之前先pull一下，一方面可以更新本地代码，另一方面便于在本本合并冲突，降低远程仓库合并时出现冲突的概率
 
+# 6. 添加已提交的文年到.gitignore
+
+```
+git pull
+git rm --cached <file>/git rm -r --cached <folder>
+修改.getignore,添加过滤
+再次添加commit
+git push
+```
+
+
+
    
 
 
