@@ -140,7 +140,11 @@ git reset --hard HEAD~100
 
 # 4. 查看提交录
 
-## 4.1 
+## ## 查看历吏记录
+
+` git log --oneline --graph`
+
+
 
 # git diff
 
@@ -197,9 +201,25 @@ git rm --cached <file>/git rm -r --cached <folder>
 git push
 ```
 
+# 7. rebase
 
 
-   
+
+   **场景一： 本地与远程同一分支提交历史不一致， push时失败**
+
+`git pull`
+
+如有冲突解决冲突
+
+`git rebase`或 `git rebase 远程分支`
+
+如有冲突解决冲突
+
+`git rebase --continue`
+
+
+
+
 
 
 
