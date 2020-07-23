@@ -13,7 +13,8 @@ export class AppComponent {
   data = [
     {id: 1, name: 'map', checked: false, run: () => this.map()},
     {id: 2, name: 'flatMap/mergeMap', checked: false, run: () => this.flatMap()},
-    {id: 3, name: 'swithMap', checked: false, run: () => this.switchMap()}
+    {id: 3, name: 'swithMap', checked: false, run: () => this.switchMap()},
+    {id: 4, name: 'Observable.create', checked: false, run: () => this.create()}
   ];
 
   run() {
@@ -57,5 +58,18 @@ export class AppComponent {
     const example = source.pipe(switchMap(() => interval(500)));
     // 输出: 0,1,2,3,4,5,6,7,8,9...0,1,2,3,4,5,6,7,8
     const subscribe = example.subscribe(val => console.log(val));
+  }
+
+  create() {
+    const observable = Observable.create(subscriber => {
+      var i = 0;
+      setInterval(() => {
+        subscriber.next(i++);
+      }, 5000);
+    });
+
+    observable.subscribe(x => {
+      console.log("get " + x);
+    });
   }
 }
