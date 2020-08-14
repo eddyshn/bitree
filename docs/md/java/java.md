@@ -43,6 +43,7 @@ public final class Class {
 }
 
 Class cls = new Class(String);
+Class c = String.class.newInstance();
 
 Class cls = String.class;
 
