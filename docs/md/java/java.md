@@ -102,4 +102,64 @@ Class cls = Class.forName("java.lang.String");
   }
   ```
 
+  # 范型
   
+  - 通配符
+  
+    ```java
+    public class Main {
+    
+        public static void main(String[] args) {
+            Info<String> s = new Info<String>();
+            //error
+            //Info<?> s = new Info<String>();
+            s.setVar("eddy");
+            fun(s);
+        }
+    
+        public static void fun(Info<?> temp){
+            System.out.println(temp);
+        }
+    }
+    ```
+  
+    
+
+- 受限泛型
+
+  - 泛型上限
+
+    ```java
+    //只是能继承 Number的类
+    public static void fun(Info<? extends Number> temp){
+            System.out.println(temp);
+        }
+    ```
+
+    ```java
+    // 在声名处直接指定上限
+    public class Info<T extends Number> {
+        private T var;
+    
+        public T getVar() {
+            return var;
+        }
+    
+        public void setVar(T var) {
+            this.var = var;
+        }
+    }
+    ```
+    
+  - 泛型下限
+
+    ```java
+    // 只能是Number和他的父类类型, 这里就是Number和Object 
+    public static void fun(Info<? super Number> temp){
+            System.out.println(temp);
+        }
+    ```
+    
+    
+
+    
