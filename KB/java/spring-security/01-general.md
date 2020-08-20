@@ -6,7 +6,7 @@ user: user
 
 Password: 
 
-![image-20200816104343049](spring-security.assets/image-20200816104343049.png)
+![image-20200816104343049](assets/image-20200816104343049.png)
 
 ## application.properties中配置
 
