@@ -1,6 +1,6 @@
 # Windows
 
-- 重命名 - ***sift+f6***
+- 重命名 - ***shift+f6***
 - 
 
 | key                                     | Description                                 |

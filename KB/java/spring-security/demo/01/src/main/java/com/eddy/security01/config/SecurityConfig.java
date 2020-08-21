@@ -3,12 +3,15 @@ package com.eddy.security01.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import javax.servlet.ServletException;
@@ -56,6 +59,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         Map<String, Object> map = new HashMap<>();
                         map.put("status", 200);
                         map.put("msg", authentication.getPrincipal());
+                        out.write(new ObjectMapper().writeValueAsString(map));
+                        out.flush();
+                        out.close();
+                    }
+                })
+                .failureHandler(new AuthenticationFailureHandler() {
+                    @Override
+                    public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("status", 401);
+
+                        if (e instanceof LockedException){
+                            map.put("msg", "账户锁定");
+                        } else if (e instanceof BadCredentialsException){
+                            map.put("msg", "用户名或密码错误");
+                        } else  if (e instanceof DisabledException){
+                            map.put("msg", "账户禁用");
+                        } else if (e instanceof AccountExpiredException){
+
+                        } else if (e instanceof CredentialsExpiredException){
+
+                        } else {
+                            map.put("msg", "登陆失败");
+                        }
+
                         out.write(new ObjectMapper().writeValueAsString(map));
                         out.flush();
                         out.close();
