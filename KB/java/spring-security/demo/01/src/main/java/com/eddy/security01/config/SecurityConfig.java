@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+//comment out this when use MultiSecurityConfig
+//@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -42,12 +44,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/admin/**").hasRole("admin")
-//                .antMatchers("/user/**").hasAnyAuthority("admin", "user")
-//                .anyRequest().authenticated()
+                .antMatchers("/admin/**").hasRole("admin")
+                .antMatchers("/user/**").hasAnyAuthority("admin", "user")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginProcessingUrl("/doLogin")//点击登陆按钮时访问的URL
+                .loginProcessingUrl("/doLogin")//点击登陆按钮时访问的URL,postman隥陆URL
                 .loginPage("/login")//登陆页面
                 .usernameParameter("uname")
                 .passwordParameter("passwd")
@@ -92,6 +94,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .permitAll()
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                        httpServletResponse.setContentType("application/json;charset=utf-8");
+                        PrintWriter out = httpServletResponse.getWriter();
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("status", 200);
+                        map.put("msg", "注销成功");
+                        out.write(new ObjectMapper().writeValueAsString(map));
+                        out.flush();
+                        out.close();
+                    }
+                })
                 .and()
                 .csrf().disable();
     }
