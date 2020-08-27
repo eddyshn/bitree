@@ -2,7 +2,13 @@
 
 
 
-# 1. 分支管理
+# Push, Pull
+
+```git push <远程主机名> <本地分支名>:<远程分支名```
+
+
+
+# 分支管理
 
 1. 创建分支
 
@@ -20,18 +26,25 @@ git checkout -b <branch-name>
 >
 > 
 
-## 1.2 切换分支
+## 切换分支
 
-`git checkout <branch-name>`
+```
+git checkout <branch-name>
+git switch <branch-name>
+```
 
-## 1.3 合并分支
+
+
+
+
+## 合并分支
 
 1. 更新要合并的两个分支到最新
 2. `git merge <source branch> --no-ff -m 'log message'`
 
 > --no-ff 禁用`Fast forward`模式, Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
 
-## 1.4 删除分支
+## 删除分支
 
 1. 删除本地分支
 
@@ -41,7 +54,7 @@ git checkout -b <branch-name>
 
    `git push origin -d <branch_name>`
    
-   ## 1.5 查看远程分支
+   ## 查看远程分支
    
    1. 查看远程分支地址
    
