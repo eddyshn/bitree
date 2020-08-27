@@ -64,7 +64,63 @@ public class MultiSecurityConfig {
                     .loginPage("/login")//登陆页面
                     .usernameParameter("uname")
                     .passwordParameter("passwd")
+                    .successHandler(new AuthenticationSuccessHandler() {
+                        @Override
+                        public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                            httpServletResponse.setContentType("application/json;charset=utf-8");
+                            PrintWriter out = httpServletResponse.getWriter();
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("status-multi", 200);
+                            map.put("msg-multi", authentication.getPrincipal());
+                            out.write(new ObjectMapper().writeValueAsString(map));
+                            out.flush();
+                            out.close();
+                        }
+                    })
+                    .failureHandler(new AuthenticationFailureHandler() {
+                        @Override
+                        public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                            httpServletResponse.setContentType("application/json;charset=utf-8");
+                            PrintWriter out = httpServletResponse.getWriter();
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("status-multi", 401);
+
+                            if (e instanceof LockedException){
+                                map.put("msg-multi", "账户锁定");
+                            } else if (e instanceof BadCredentialsException){
+                                map.put("msg-multi", "用户名或密码错误");
+                            } else  if (e instanceof DisabledException){
+                                map.put("msg-multi", "账户禁用");
+                            } else if (e instanceof AccountExpiredException){
+
+                            } else if (e instanceof CredentialsExpiredException){
+
+                            } else {
+                                map.put("msg-multi", "登陆失败");
+                            }
+
+                            out.write(new ObjectMapper().writeValueAsString(map));
+                            out.flush();
+                            out.close();
+                        }
+                    })
                     .permitAll()
+                    .and()
+                    .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler(new LogoutSuccessHandler() {
+                        @Override
+                        public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                            httpServletResponse.setContentType("application/json;charset=utf-8");
+                            PrintWriter out = httpServletResponse.getWriter();
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("status-multi", 200);
+                            map.put("msg-multi", "注销成功");
+                            out.write(new ObjectMapper().writeValueAsString(map));
+                            out.flush();
+                            out.close();
+                        }
+                    })
                     .and()
                     .csrf().disable();
         }
